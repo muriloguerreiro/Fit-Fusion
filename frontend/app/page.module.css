@@ -1,0 +1,52 @@
+.title {
+  color: white; /* Altera a cor do título para branco */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to top right, #281754, #b592f1);
+}
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 80%; /* Definindo a largura do container para 80% do container pai */
+  max-width: 1200px; /* Limitando a largura máxima do container */
+  margin: 0 auto; /* Centralizando o container na tela */
+}
+
+.card {
+  min-width: 450px;
+  height: 300px;
+  border-radius: 20px;
+  background-color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+  display: flex;
+  align-items: center; /* Centraliza o texto verticalmente */
+  justify-content: center; /* Centraliza o texto horizontalmente */
+}
+
+.link {
+  text-decoration: none;
+}
+
+.cardTitle {
+  color:#7052bb
+}

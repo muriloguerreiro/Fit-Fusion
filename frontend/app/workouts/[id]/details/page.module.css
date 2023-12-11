@@ -1,0 +1,109 @@
+.container {
+  margin: 0 auto;
+  padding: 10px;
+  background: linear-gradient(to top right, #281754, #b592f1);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 1.75em;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.image {
+  max-width: 1000px;
+  width: 60%;
+  height: auto;
+  border-radius: 15px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.exercisesList {
+  width: 60%;
+  color: #7052bb;
+}
+
+.exercisesList > div {
+  margin-bottom: 10px;
+  padding: 10px 10px 10px 10px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.exerciseName {
+  margin: 0px 0px 10px 0px;
+  font-size: 0.9em;
+}
+
+.exerciseDetails {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  font-size: 0.75em;
+  text-decoration: none;
+  color: blue;
+}
+
+.descriptionRow {
+  margin: 10px;
+  width: 60%;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.descriptionRow button{
+  font-weight: bold;
+  padding: 5px 10px;
+  color:#7052bb;
+  background-color: white;
+  border-radius: 5px;
+  border-style: none;
+}
+
+.descriptionColumn {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.descriptionColumn p {
+  margin-bottom: 8px;
+}
+
+.checkbox {
+  accent-color: #7052bb;
+}
+
+@media (max-width: 768px) {
+  .image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .exercisesList {
+    width: 100%
+  }
+
+  .descriptionRow {
+    width: 95%;
+  }
+}

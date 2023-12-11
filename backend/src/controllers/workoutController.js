@@ -1,3 +1,4 @@
+const Exercise = require('../models/Exercise')
 const Workout = require('../models/Workout')
 
 
@@ -29,6 +30,24 @@ const WorkoutController = {
                 return res.status(404).json({ success: false, message: 'Treino não encontrado' })
             }
             res.status(200).json({ success: true, workout })
+        } catch (error) {
+            res.status(500).json({ success: false, message: 'Erro ao obter o treino', error: error.message })
+        }
+    },
+
+    async getWorkoutDetailsById(req, res) {
+        const { id } = req.params
+        try {
+            const workout = await Workout.getWorkoutById(id)     
+            if (!workout) {
+                return res.status(404).json({ success: false, message: 'Treino não encontrado' })
+            }
+            const exercises = await Exercise.getExercisesByWorkout(id)
+            if (!exercises) {
+                return res.status(404).json({ success: false, message: 'Exercício não encontrado' })
+            }
+
+            res.status(200).json({ success: true, workout, exercises })
         } catch (error) {
             res.status(500).json({ success: false, message: 'Erro ao obter o treino', error: error.message })
         }
