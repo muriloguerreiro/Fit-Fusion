@@ -1,7 +1,45 @@
 .container {
-  margin: 0 auto;
-  padding: 10px;
   background: linear-gradient(to top right, #281754, #b592f1);
+}
+
+.bodyContainer {
+  padding: 10px;
+}
+
+.navigatorRow {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: grey;
+  width: 60%;
+  border-radius: 0 0 20px 20px;
+}
+
+.navigatorRow .link {
+  flex: 1;
+  font-size: 0.9em;
+}
+
+.navigatorRow div {
+  color: #7052bb;
+  font-weight: bold;
+  text-align: center;
+  background-color: white;
+  padding: 10px;
+  width: 90%;
+}
+
+.navigatorRow div:hover {
+  background-color: #D2D2D2;
+}
+
+.navigatorRow :first-child div{
+  border-radius: 0 0 0 20px;
+}
+
+.navigatorRow :last-child div{
+  border-radius: 0 0 20px 0;
 }
 
 .header {
@@ -105,5 +143,20 @@
 
   .descriptionRow {
     width: 95%;
+  }
+
+  .navigatorRow {
+    width: auto;
+  }
+
+  .navigatorRow .link {
+    font-size: 0.7em;
+  }
+
+  .navigatorRow :first-child div{
+    border-radius: 0;
+  }
+  .navigatorRow :last-child div{
+    border-radius: 0;
   }
 }

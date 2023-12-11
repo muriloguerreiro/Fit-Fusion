@@ -2,9 +2,20 @@ import Image from 'next/image'
 import styles from './page.module.css'
 import ExerciseCard from './ExerciseCard'
 import SelectAllCheckbox from './SelectAllCheckbox'
+import Navigator from './Navigator'
 
-async function getApiData(id) {
+async function getApiWorkoutDetails(id) {
   const res = await fetch(`http://localhost:8080/workouts/${id}/details`)
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
+
+  return res.json()
+}
+
+async function getApiWorkouts() {
+  const res = await fetch(`http://localhost:8080/workouts`)
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
@@ -15,9 +26,12 @@ async function getApiData(id) {
 
 export default async function Page({ params }) {
   const [id] = params.id
-  const response = await getApiData(id)
+  const response = await getApiWorkoutDetails(id)
+  const response2 = await getApiWorkouts()
+
   const workout = response.workout
   const exercises = response.exercises
+  const workoutsList = response2.workouts
 
   workout.created_at = new Date(workout.created_at).toLocaleDateString('pt-BR', {
     day: '2-digit', month: '2-digit', year: '2-digit'
@@ -29,30 +43,33 @@ export default async function Page({ params }) {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>{workout.name}</h1>
-        <Image
-          className={styles.image}
-          src={workout.image_url}
-          alt={workout.name}
-          width={1000}
-          height={400}
-        />
-        <div className={styles.descriptionRow}>
-          <div className={styles.descriptionColumn}>
-            <p>Criado em: {workout.created_at}</p>
-            <p>Vencimento: {workout.due}</p>
+      <Navigator workouts={workoutsList} />
+      <div className={styles.bodyContainer}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>{workout.name}</h1>
+          <Image
+            className={styles.image}
+            src={workout.image_url}
+            alt={workout.name}
+            width={1000}
+            height={400}
+          />
+          <div className={styles.descriptionRow}>
+            <div className={styles.descriptionColumn}>
+              <p>Criado em: {workout.created_at}</p>
+              <p>Vencimento: {workout.due}</p>
+            </div>
+            <SelectAllCheckbox />
           </div>
-          <SelectAllCheckbox />
-        </div>
-      </header>
-      <main className={styles.main}>
-        <div className={styles.exercisesList}>
-          {exercises.map(exercise => (
-            <ExerciseCard key={exercise.id} exercise={exercise} />
-          ))}
-        </div>
-      </main>
+        </header>
+        <main className={styles.main}>
+          <div className={styles.exercisesList}>
+            {exercises.map(exercise => (
+              <ExerciseCard key={exercise.id} exercise={exercise} />
+            ))}
+          </div>
+        </main>
+      </div>
     </div>
   )
 }
