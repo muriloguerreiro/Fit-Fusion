@@ -5,7 +5,7 @@ import SelectAllCheckbox from './SelectAllCheckbox'
 import Navigator from './Navigator'
 
 async function getApiWorkoutDetails(id) {
-  const res = await fetch(`http://localhost:8080/workouts/${id}/details`)
+  const res = await fetch(`${process.env.API_URL}/workouts/${id}/details`)
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
@@ -15,7 +15,7 @@ async function getApiWorkoutDetails(id) {
 }
 
 async function getApiWorkouts() {
-  const res = await fetch(`http://localhost:8080/workouts`)
+  const res = await fetch(`${process.env.API_URL}/workouts`)
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')

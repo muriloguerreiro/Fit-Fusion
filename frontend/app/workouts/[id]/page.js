@@ -1,8 +1,9 @@
+require('dotenv').config();
 import styles from './page.module.css'
 
 
 async function getApiData(id) {
-  const res = await fetch(`http://localhost:8080/workouts/${id}`)
+  const res = await fetch(`${process.env.API_URL}/workouts/${id}`)
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
