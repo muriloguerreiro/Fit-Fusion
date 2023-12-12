@@ -1,8 +1,9 @@
 import styles from './page.module.css'
 
+const baseUrl = process.env.API_URL;
 
 async function getApiData(id) {
-  const res = await fetch(`${process.env.API_URL}/workouts/${id}`)
+  const res = await fetch(`${baseUrl}/workouts/${id}`)
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
