@@ -8,9 +8,11 @@ function Navigator({ workouts }) {
   return (
     <div className={styles.navigatorRow}>
       {workouts.map((workout) => (
-        <Link className={styles.link} href={`/workouts/${workout.id}/details`} key={workout.id}>
-          <div>Treino {workout.id}</div>
-        </Link>
+        <div key={workout.id}>
+          <Link className={styles.link} href={`/workouts/${workout.id}/details`} key={workout.id}>
+            Treino {workout.id}
+          </Link>
+        </div>
       ))}
     </div>
   );

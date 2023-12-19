@@ -1,45 +1,47 @@
 .container {
   background: linear-gradient(to top right, #281754, #b592f1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .bodyContainer {
+  width: 100%;
   padding: 10px;
 }
 
 .navigatorRow {
-  margin: 0 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: grey;
+  justify-content: space-evenly;
   width: 60%;
   border-radius: 0 0 20px 20px;
 }
 
-.navigatorRow .link {
+.navigatorRow div {
+  text-align: center;
   flex: 1;
-  font-size: 0.9em;
 }
 
-.navigatorRow div {
+.navigatorRow .link {
+  display: block;
+  margin: 0 1px 0 0;
+  padding: 10px;
+  background-color:white;
+  text-decoration: none;
   color: #7052bb;
   font-weight: bold;
-  text-align: center;
-  background-color: white;
-  padding: 10px;
-  width: 90%;
 }
 
-.navigatorRow div:hover {
-  background-color: #D2D2D2;
-}
-
-.navigatorRow :first-child div{
+.navigatorRow div:first-child .link {
   border-radius: 0 0 0 20px;
 }
 
-.navigatorRow :last-child div{
+.navigatorRow div:last-child .link {
   border-radius: 0 0 20px 0;
+  margin: 0;
 }
 
 .header {
@@ -73,7 +75,7 @@
   color: #7052bb;
 }
 
-.exercisesList > div {
+.exercisesList>div {
   margin-bottom: 10px;
   padding: 10px 10px 10px 10px;
   background-color: white;
@@ -92,7 +94,7 @@
   align-items: center;
 }
 
-.link {
+.videoLink {
   font-size: 0.75em;
   text-decoration: none;
   color: blue;
@@ -108,10 +110,10 @@
   justify-content: space-between;
 }
 
-.descriptionRow button{
+.descriptionRow button {
   font-weight: bold;
   padding: 5px 10px;
-  color:#7052bb;
+  color: #7052bb;
   background-color: white;
   border-radius: 5px;
   border-style: none;
@@ -136,7 +138,11 @@
     width: 100%;
     height: auto;
   }
-  
+
+  .bodyContainer {
+    width: auto;
+  }
+
   .exercisesList {
     width: 100%
   }
@@ -146,17 +152,18 @@
   }
 
   .navigatorRow {
-    width: auto;
+    width: 100%;
   }
 
   .navigatorRow .link {
-    font-size: 0.7em;
+    font-size: 0.8em;
   }
 
-  .navigatorRow :first-child div{
+  .navigatorRow div:first-child .link {
     border-radius: 0;
   }
-  .navigatorRow :last-child div{
+
+  .navigatorRow div:last-child .link {
     border-radius: 0;
   }
 }

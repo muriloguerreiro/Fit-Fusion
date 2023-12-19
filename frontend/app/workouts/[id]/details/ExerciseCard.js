@@ -22,7 +22,7 @@ function ExerciseCard({ exercise }) {
       <div className={styles.exerciseDetails}>
         <p style={{ opacity: isChecked ? 0.2 : 1, textDecoration: isChecked ? 'line-through' : 'none' }}>{exercise.series}</p>
         <p style={{ opacity: isChecked ? 0.2 : 1, textDecoration: isChecked ? 'line-through' : 'none' }}>{exercise.reps}</p>
-        <Link style={{ color: isChecked ? 'black' : 'blue', opacity: isChecked ? 0.2 : 1, textDecoration: isChecked ? 'line-through' : 'none' }} className={styles.link} href={exercise.link}>
+        <Link style={{ color: isChecked ? 'black' : 'blue', opacity: isChecked ? 0.2 : 1, textDecoration: isChecked ? 'line-through' : 'none' }} className={styles.videoLink} href={exercise.link}>
           {exercise.link ? 'Vídeo' : 'S/ Vídeo'}
         </Link>
         <input
