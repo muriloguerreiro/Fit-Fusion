@@ -3,11 +3,33 @@ import styles from './page.module.css'
 import ExerciseCard from './ExerciseCard'
 import SelectAllCheckbox from './SelectAllCheckbox'
 import Navigator from './Navigator'
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 const baseUrl = process.env.API_URL;
 
-async function getApiWorkoutDetails(id) {
-  const res = await fetch(`${baseUrl}/workouts/${id}/details`)
+async function getToken() {
+  const nextCookies = cookies()
+  const token = nextCookies.get('token')
+
+  if (!token) {
+    redirect("/login")
+  }
+
+  return token.value
+}
+
+async function getApiWorkoutDetails(id, token) {
+  const res = await fetch(`${baseUrl}/workouts/${id}/details`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+
+  if (res.status == "403") {
+    redirect("/login")
+  }
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
@@ -16,8 +38,18 @@ async function getApiWorkoutDetails(id) {
   return res.json()
 }
 
-async function getApiWorkouts() {
-  const res = await fetch(`${baseUrl}/workouts`)
+async function getApiWorkoutsByLoggedUser(token) {
+  const res = await fetch(`${baseUrl}/workouts/user`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+
+
+  if (res.status == "403") {
+    redirect("/login")
+  }
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
@@ -28,11 +60,20 @@ async function getApiWorkouts() {
 
 export default async function Page({ params }) {
   const [id] = params.id
-  const response = await getApiWorkoutDetails(id)
-  const response2 = await getApiWorkouts()
+  const token = await getToken()
+  const response = await getApiWorkoutDetails(id, token)
+  const response2 = await getApiWorkoutsByLoggedUser(token)
 
   const workout = response.workout
   const exercises = response.exercises
+  const loads = response.loads
+
+  loads.forEach(load => {
+    load.created_at = new Date(load.created_at).toLocaleDateString('pt-BR', {
+      day: '2-digit', month: '2-digit', year: '2-digit'
+    })
+  })
+
   const workoutsList = response2.workouts
 
   workout.created_at = new Date(workout.created_at).toLocaleDateString('pt-BR', {
@@ -66,9 +107,10 @@ export default async function Page({ params }) {
         </header>
         <main className={styles.main}>
           <div className={styles.exercisesList}>
-            {exercises.map(exercise => (
-              <ExerciseCard key={exercise.id} exercise={exercise} />
-            ))}
+            {exercises.map(exercise => {
+              const exerciseLoads = loads.filter(load => load.exercise_id === exercise.id)
+              return <ExerciseCard key={exercise.id} exercise={exercise} loads={exerciseLoads} token={token} />
+            })}
           </div>
         </main>
       </div>

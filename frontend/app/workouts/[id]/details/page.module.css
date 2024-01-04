@@ -94,10 +94,12 @@
   align-items: center;
 }
 
-.videoLink {
+.button {
   font-size: 0.75em;
   text-decoration: none;
   color: blue;
+  border: none;
+  background-color: white;
 }
 
 .descriptionRow {
@@ -131,6 +133,79 @@
 
 .checkbox {
   accent-color: #7052bb;
+}
+
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 75%;
+  max-width: 500px;
+  overflow-y: auto;
+  max-height: 80%;
+}
+
+.modalContent h4 {
+  text-align: center;
+  margin-top: 0
+}
+
+.modalContent ul {
+  list-style: none;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.modalContent li {
+  background-color: #f2f2f2;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.modalContent form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modalContent input {
+  background-color: white;
+  padding: 8px;
+  border-radius: 5px;
+  border: 2px solid #ddd;
+  outline: none;
+}
+
+.modalContent button {
+  border-radius: 10px;
+  border: none;
+  padding: 15px;
+  background: #7052bb;
+  color: white;
+  font-weight: bold;
+  font-size: 1em;
+  border: 2px solid;
+  cursor: pointer;
+}
+
+.modalContent button:hover {
+  background-color: #0056b3;
 }
 
 @media (max-width: 768px) {

@@ -10,7 +10,7 @@ function Navigator({ workouts }) {
       {workouts.map((workout) => (
         <div key={workout.id}>
           <Link className={styles.link} href={`/workouts/${workout.id}/details`} key={workout.id}>
-            Treino {workout.id}
+            Treino {workout.label}
           </Link>
         </div>
       ))}

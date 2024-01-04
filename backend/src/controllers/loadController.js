@@ -1,4 +1,5 @@
 const Load = require('../models/Load')
+const Exercise = require('../models/Exercise')
 
 
 const LoadController = {
@@ -36,9 +37,9 @@ const LoadController = {
   },
 
   async getLoadsByExerciseId(req, res) {
-    const { id } = req.params;
+    const { exerciseId } = req.params;
     try {
-      const loads = await Load.getLoadsByExerciseId(id);
+      const loads = await Load.getLoadsByExerciseId([exerciseId]);
       res.status(200).json(loads);
     } catch (error) {
       res.status(500).json({ error: error.message });

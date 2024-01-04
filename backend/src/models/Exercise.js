@@ -3,15 +3,15 @@ const knex = require('knex')(knexfile.development)
 
 
 const Exercise = {
-  async createExercise(name, series, reps, workoutId, link, done) {
+  async createExercise(name, series, reps, interval, workoutId, link) {
     try {
       const newExercise = await knex('exercises').insert({
         name,
         series,
         reps,
+        interval,
         workout_id: workoutId,
-        link,
-        done
+        link
       })
       
       return newExercise;
@@ -47,11 +47,11 @@ const Exercise = {
     }
   },
 
-  async updateExercise(id, name, series, reps, workoutId, link, done) {
+  async updateExercise(id, name, series, reps, interval, workoutId, link) {
     try {
       const updatedExercise = await knex('exercises')
         .where({ id })
-        .update({ name, series, reps, workout_id: workoutId, link, done, updated_at: knex.fn.now() }, ['id', 'name', 'series', 'reps', 'workout_id', 'link', 'done'])
+        .update({ name, series, reps, interval, workout_id: workoutId, link, updated_at: knex.fn.now() }, ['id', 'name', 'series', 'reps', 'interval', 'workout_id', 'link'])
       return updatedExercise
     } catch (error) {
       throw new Error(`Erro ao atualizar o exercício: ${error}`)

@@ -3,9 +3,9 @@ const Exercise = require('../models/Exercise')
 
 const ExerciseController = {
   async createExercise(req, res) {
-    const { name, series, reps, workoutId, link, done } = req.body
+    const { name, series, reps, interval, workoutId, link} = req.body
     try {
-      const newExercise = await Exercise.createExercise(name, series, reps, workoutId, link, done)
+      const newExercise = await Exercise.createExercise(name, series, reps, interval, workoutId, link)
       res.status(201).json({ success: true, exercise: newExercise })
     } catch (error) {
       res.status(500).json({ success: false, message: 'Erro ao criar o exercício', error: error.message })
@@ -35,9 +35,9 @@ const ExerciseController = {
   },
 
   async getExercisesByWorkout(req, res) {
-    const { id } = req.params
+    const { workoutId } = req.params
     try {
-      const exercises = await Exercise.getExercisesByWorkout(id)
+      const exercises = await Exercise.getExercisesByWorkout(workoutId)
       res.status(200).json({ success: true, exercises })
     } catch (error) {
       res.status(500).json({ success: false, message: 'Erro ao obter os exercícios do treino', error: error.message })
@@ -46,9 +46,9 @@ const ExerciseController = {
 
   async updateExercise(req, res) {
     const { id } = req.params
-    const { name, series, reps, workoutId, link, done } = req.body
+    const { name, series, reps, interval, workoutId, link} = req.body
     try {
-      const updatedExercise = await Exercise.updateExercise(id, name, series, reps, workoutId, link, done)
+      const updatedExercise = await Exercise.updateExercise(id, name, series, reps, interval, workoutId, link)
       res.status(200).json({ success: true, exercise: updatedExercise })
     } catch (error) {
       res.status(500).json({ success: false, message: 'Erro ao atualizar o exercício', error: error.message })
