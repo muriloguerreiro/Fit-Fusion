@@ -4,8 +4,8 @@ exports.up = function(knex) {
       table.string('name').notNullable()
       table.string('series')
       table.string('reps')
+      table.string('interval')
       table.string('link')
-      table.boolean('done').notNullable()
   
       table.timestamps(true, true)
     })

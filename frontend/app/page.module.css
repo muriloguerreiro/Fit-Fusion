@@ -1,46 +1,31 @@
-.title {
-  color: white; /* Altera a cor do título para branco */
-}
-
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
   background: linear-gradient(to top right, #281754, #b592f1);
+  height: 100vh;
+}
+
+.title {
+  color: white;
+  text-align: center;
 }
 
 .main {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 40px;
-}
-
-.cardContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  width: 80%; /* Definindo a largura do container para 80% do container pai */
-  max-width: 1200px; /* Limitando a largura máxima do container */
-  margin: 0 auto; /* Centralizando o container na tela */
+  gap: 10px;
+  width: 80%;
 }
 
 .card {
-  min-width: 450px;
-  height: 300px;
-  border-radius: 20px;
-  background-color: white;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 10px;
   display: flex;
-  align-items: center; /* Centraliza o texto verticalmente */
-  justify-content: center; /* Centraliza o texto horizontalmente */
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 10px;
+  width: 48%;
+  height: 80%;
 }
 
 .link {
@@ -48,5 +33,30 @@
 }
 
 .cardTitle {
-  color:#7052bb
+  color: #7052bb;
+}
+
+.navigateForm button {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background-color: white;  
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  outline: none;
+}
+
+@media (max-width: 600px) {
+  .main {
+    width: 80%;
+  }
+
+  .card {
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+    height: 30%;
+  }
 }

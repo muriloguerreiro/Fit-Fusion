@@ -30,9 +30,9 @@ const Load = {
         }
     },
 
-    async getLoadsByExerciseId(exerciseId) {
+    async getLoadsByExerciseId(exerciseIds) {
         try {
-            const loads = await knex('loads').where({ exercise_id: exerciseId });
+            const loads = await knex('loads').whereIn('exercise_id', exerciseIds);
             return loads;
         } catch (error) {
             throw new Error(`Erro ao buscar cargas por ID do exercício: ${error}`);

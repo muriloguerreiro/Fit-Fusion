@@ -1,9 +1,28 @@
 import styles from './page.module.css'
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 const baseUrl = process.env.API_URL;
 
 async function getApiData(id) {
-  const res = await fetch(`${baseUrl}/workouts/${id}`)
+
+  const nextCookies = cookies()
+  const token = nextCookies.get('token')
+
+  if (!token) {
+    redirect("/login")
+  }
+
+  const res = await fetch(`${baseUrl}/workouts/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token.value}`
+    }
+  })
+
+  if (res.status == "403") {
+    redirect("/login")
+  }
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
