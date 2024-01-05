@@ -9,6 +9,10 @@ module.exports = {
       password: process.env.DB_PASS,
       database: process.env.DB_DATABASE
     },
+    pool: {
+      min: 2,
+      max: 3
+    },
     migrations: {
       tableName: 'knex_migrations',
       directory: './src/database/migrations'
