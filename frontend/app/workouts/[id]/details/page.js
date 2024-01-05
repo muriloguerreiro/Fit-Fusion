@@ -11,10 +11,13 @@ const baseUrl = process.env.API_URL;
 async function getToken() {
   const nextCookies = cookies()
   const token = nextCookies.get('token')
+  
+  console.log("Token")
+  console.log(token.value)
 
   if (!token) {
-    console.log("Erro ao tentar pegar token")
-    redirect("/login")
+    console.log("Erro ao tentar obter o login")
+    //redirect("/login")
   }
 
   return token.value
