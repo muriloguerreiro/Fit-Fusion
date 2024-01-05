@@ -21,11 +21,11 @@ export default async function Page({ params }) {
     })
   
     if (res.status == "403") {
-      redirect('/')
+      throw new Error(`Old token for - ${baseUrl}/workouts/${id}/details and ${token}`)
     }
   
     if (!res.ok) {
-      throw new Error('Failed to fetch WorkoutDetails')
+      throw new Error(`Failed to fetch WorkoutDetails - ${res.status}`)
     }
   
     return res.json()

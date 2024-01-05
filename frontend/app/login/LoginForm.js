@@ -24,12 +24,12 @@ export default function LoginForm() {
             cache: 'no-store'
         })
 
+        const res = await response.json()
+        const token = res.token
+
         if (!response.ok) {
             throw new Error('Falha no login')
         }
-
-        const res = await response.json()
-        const token = res.token
 
         const nextCookies = cookies()
         nextCookies.set('token', token)
