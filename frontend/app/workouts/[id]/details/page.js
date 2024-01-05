@@ -38,7 +38,7 @@ export default async function Page({ params }) {
   
   
     if (res.status == "403") {
-      throw new Error('Forbidden')
+      throw new Error('Forbidden2')
     }
   
     if (!res.ok) {

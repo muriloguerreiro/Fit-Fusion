@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './page.module.css'
 
 import Link from 'next/link';
@@ -11,13 +11,17 @@ function ExerciseCard({ exercise, token, loads }) {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const [isChecked, setIsChecked] = useState(localStorage.getItem(`exercise_${exercise.id}_checked`) === 'true')
-  const handleCheckboxChange = () => {
-    if (typeof window !== 'undefined') {
-      const newState = !isChecked;
-      setIsChecked(newState);
-      localStorage.setItem(`exercise_${exercise.id}_checked`, newState);
-    }
+  const [isChecked, setIsChecked] = useState(false);
+  
+  useEffect(() => {
+    const checked = localStorage.getItem(`exercise_${exercise.id}_checked`) === 'true';
+    setIsChecked(checked);
+  }, [exercise.id]);
+
+  async function handleCheckboxChange() {
+    const newState = !isChecked;
+    setIsChecked(newState);
+    localStorage.setItem(`exercise_${exercise.id}_checked`, newState);
   }
 
   return (
