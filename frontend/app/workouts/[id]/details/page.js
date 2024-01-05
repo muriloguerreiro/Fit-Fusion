@@ -105,7 +105,7 @@ export default async function Page({ params }) {
           <div className={styles.exercisesList}>
             {exercises.map(exercise => {
               const exerciseLoads = loads.filter(load => load.exercise_id === exercise.id)
-              return <ExerciseCard key={exercise.id} exercise={exercise} loads={exerciseLoads} token={token} />
+              return <ExerciseCard key={exercise.id} exercise={exercise} loads={exerciseLoads} token={token.value} />
             })}
           </div>
         </main>

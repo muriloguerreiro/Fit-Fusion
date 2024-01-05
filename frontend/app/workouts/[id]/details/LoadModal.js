@@ -9,6 +9,7 @@ export default function LoadModal({ onClose, token, exercise, loads }) {
 
     const baseUrl = process.env.NEXT_PUBLIC_API_URL
     const [submitted, setSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [weightError, setWeightError] = useState('');
 
     async function onSubmit(formData) {
@@ -22,6 +23,7 @@ export default function LoadModal({ onClose, token, exercise, loads }) {
             setWeightError('Por favor, insira um número inteiro válido.');
         } else {
             setWeightError('');
+            setIsLoading(true);
             const response = await fetch(`${baseUrl}/loads`, {
                 method: 'POST',
                 headers: {
@@ -30,11 +32,12 @@ export default function LoadModal({ onClose, token, exercise, loads }) {
                 },
                 body: JSON.stringify(rawFormData)
             })
-    
+
             if (!response.ok) {
                 throw new Error('Falha ao buscar cargas')
             }
 
+            setIsLoading(false);
             setSubmitted(true)
         }
     }
@@ -42,6 +45,7 @@ export default function LoadModal({ onClose, token, exercise, loads }) {
     useEffect(() => {
         if (submitted) {
             router.refresh()
+            setSubmitted(false)
         }
     }, [submitted])
 
@@ -56,7 +60,9 @@ export default function LoadModal({ onClose, token, exercise, loads }) {
                 </ul>
                 <form action={onSubmit}>
                     <input type="text" name="weight" placeholder="Adicionar carga" />
-                    <button type="submit">Salvar</button>
+                    <button type="submit" disabled={isLoading}>
+                        {isLoading ? 'Carregando...' : 'Salvar'}
+                    </button>
                     {weightError && <p style={{ color: 'red' }}>{weightError}</p>}
                 </form>
             </div>
