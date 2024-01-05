@@ -10,6 +10,8 @@ const baseUrl = process.env.API_URL;
 export default async function Page({ params }) {
   
   async function getApiWorkoutDetails(id, token) {
+    "use server"
+
     const res = await fetch(`${baseUrl}/workouts/${id}/details`, {
       headers: {
         'Content-Type': 'application/json',
@@ -18,7 +20,7 @@ export default async function Page({ params }) {
     })
   
     if (res.status == "403") {
-      throw new Error('Forbidden')
+      throw new Error(`Forbidden for token: ${token}`)
     }
   
     if (!res.ok) {
@@ -29,6 +31,8 @@ export default async function Page({ params }) {
   }
   
   async function getApiWorkoutsByLoggedUser(token) {
+    "use server"
+
     const res = await fetch(`${baseUrl}/workouts/user`, {
       headers: {
         'Content-Type': 'application/json',
