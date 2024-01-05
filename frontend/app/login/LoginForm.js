@@ -20,7 +20,8 @@ export default function LoginForm() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(rawFormData)
+            body: JSON.stringify(rawFormData),
+            cache: 'no-store'
         })
 
         if (!response.ok) {
