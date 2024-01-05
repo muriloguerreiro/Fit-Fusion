@@ -8,21 +8,6 @@ import { cookies } from "next/headers";
 
 const baseUrl = process.env.API_URL;
 
-async function getToken() {
-  const nextCookies = cookies()
-  const token = nextCookies.get('token')
-  
-  console.log("Token")
-  console.log(token.value)
-
-  if (!token) {
-    console.log("Erro ao tentar obter o login")
-    //redirect("/login")
-  }
-
-  return token.value
-}
-
 async function getApiWorkoutDetails(id, token) {
   const res = await fetch(`${baseUrl}/workouts/${id}/details`, {
     headers: {
@@ -32,7 +17,7 @@ async function getApiWorkoutDetails(id, token) {
   })
 
   if (res.status == "403") {
-    redirect("/login")
+    throw new Error('Forbidden')
   }
 
   if (!res.ok) {
@@ -52,7 +37,7 @@ async function getApiWorkoutsByLoggedUser(token) {
 
 
   if (res.status == "403") {
-    redirect("/login")
+    throw new Error('Forbidden')
   }
 
   if (!res.ok) {
@@ -64,7 +49,14 @@ async function getApiWorkoutsByLoggedUser(token) {
 
 export default async function Page({ params }) {
   const [id] = params.id
-  const token = await getToken()
+
+  const nextCookies = cookies()
+  const token = nextCookies.get('token')
+
+  if (!token) {
+    throw new Error('Failed to get token')
+  }
+
   const response = await getApiWorkoutDetails(id, token)
   const response2 = await getApiWorkoutsByLoggedUser(token)
 
