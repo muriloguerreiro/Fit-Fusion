@@ -3,51 +3,51 @@ import styles from './page.module.css'
 import ExerciseCard from './ExerciseCard'
 import SelectAllCheckbox from './SelectAllCheckbox'
 import Navigator from './Navigator'
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 const baseUrl = process.env.API_URL;
 
-async function getApiWorkoutDetails(id, token) {
-  const res = await fetch(`${baseUrl}/workouts/${id}/details`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    }
-  })
-
-  if (res.status == "403") {
-    throw new Error('Forbidden')
-  }
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
-
-  return res.json()
-}
-
-async function getApiWorkoutsByLoggedUser(token) {
-  const res = await fetch(`${baseUrl}/workouts/user`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    }
-  })
-
-
-  if (res.status == "403") {
-    throw new Error('Forbidden')
-  }
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
-
-  return res.json()
-}
-
 export default async function Page({ params }) {
+  
+  async function getApiWorkoutDetails(id, token) {
+    const res = await fetch(`${baseUrl}/workouts/${id}/details`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+  
+    if (res.status == "403") {
+      throw new Error('Forbidden')
+    }
+  
+    if (!res.ok) {
+      throw new Error('Failed to fetch WorkoutDetails')
+    }
+  
+    return res.json()
+  }
+  
+  async function getApiWorkoutsByLoggedUser(token) {
+    const res = await fetch(`${baseUrl}/workouts/user`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+  
+  
+    if (res.status == "403") {
+      throw new Error('Forbidden')
+    }
+  
+    if (!res.ok) {
+      throw new Error('Failed to fetch WorkoutsByLoggedUser')
+    }
+  
+    return res.json()
+  }
+  
   const [id] = params.id
 
   const nextCookies = cookies()
@@ -57,8 +57,8 @@ export default async function Page({ params }) {
     throw new Error('Failed to get token')
   }
 
-  const response = await getApiWorkoutDetails(id, token)
-  const response2 = await getApiWorkoutsByLoggedUser(token)
+  const response = await getApiWorkoutDetails(id, token.value)
+  const response2 = await getApiWorkoutsByLoggedUser(token.value)
 
   const workout = response.workout
   const exercises = response.exercises
