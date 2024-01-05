@@ -13,6 +13,7 @@ async function getToken() {
   const token = nextCookies.get('token')
 
   if (!token) {
+    console.log("Erro ao tentar pegar token")
     redirect("/login")
   }
 
