@@ -4,6 +4,7 @@ import ExerciseCard from './ExerciseCard'
 import SelectAllCheckbox from './SelectAllCheckbox'
 import Navigator from './Navigator'
 import { cookies } from "next/headers";
+import { redirect } from 'next/navigation'
 
 const baseUrl = process.env.API_URL;
 
@@ -20,7 +21,7 @@ export default async function Page({ params }) {
     })
   
     if (res.status == "403") {
-      throw new Error(`Forbidden for token: ${token}`)
+      redirect('/')
     }
   
     if (!res.ok) {
@@ -42,7 +43,7 @@ export default async function Page({ params }) {
   
   
     if (res.status == "403") {
-      throw new Error('Forbidden2')
+      redirect('/')
     }
   
     if (!res.ok) {
