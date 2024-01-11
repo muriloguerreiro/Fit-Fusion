@@ -3,7 +3,7 @@ import styles from './page.module.css'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react';
 
-export default function LoadModal({ onClose, token, exercise, loads }) {
+export default function LoadModal({ onClose, token, exercise }) {
 
     const router = useRouter()
 
@@ -11,6 +11,14 @@ export default function LoadModal({ onClose, token, exercise, loads }) {
     const [submitted, setSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [weightError, setWeightError] = useState('');
+
+    const loads = exercise.loads
+
+    loads.forEach(load => {
+        load.createdAt = new Date(load.createdAt).toLocaleDateString('pt-BR', {
+            day: '2-digit', month: '2-digit', year: '2-digit'
+        })
+    })
 
     async function onSubmit(formData) {
 
@@ -55,7 +63,7 @@ export default function LoadModal({ onClose, token, exercise, loads }) {
                 <h4>{exercise.name}</h4>
                 <ul>
                     {loads.map((load) => (
-                        <li key={load.id}>{`${load.weight}kg - ${load.created_at}`}</li>
+                        <li key={load.id}>{`${load.weight}kg - ${load.createdAt}`}</li>
                     ))}
                 </ul>
                 <form action={onSubmit}>

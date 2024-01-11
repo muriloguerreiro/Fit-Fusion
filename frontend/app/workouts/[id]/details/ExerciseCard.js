@@ -6,7 +6,7 @@ import styles from './page.module.css'
 import Link from 'next/link';
 import LoadModal from './LoadModal';
 
-function ExerciseCard({ exercise, token, loads }) {
+function ExerciseCard({ exercise, token }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -35,7 +35,7 @@ function ExerciseCard({ exercise, token, loads }) {
           {exercise.link ? 'Vídeo' : 'S/ Vídeo'}
         </Link>
         <button onClick={openModal} style={{ color: isChecked ? 'black' : 'blue', opacity: isChecked ? 0.2 : 1, textDecoration: isChecked ? 'line-through' : 'none' }} className={styles.button}>Carga</button>
-        {isModalOpen && <LoadModal onClose={closeModal} token={token} exercise={exercise} loads={loads}/>}
+        {isModalOpen && <LoadModal onClose={closeModal} token={token} exercise={exercise}/>}
         <input
           className={styles.checkbox}
           type="checkbox"

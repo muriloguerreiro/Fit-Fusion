@@ -52,25 +52,50 @@ const WorkoutController = {
 
     async getWorkoutDetailsById(req, res) {
         const { id } = req.params
-        try {
-            const workout = await Workout.getWorkoutById(id)
-            if (!workout) {
-                return res.status(404).json({ success: false, message: 'Treino não encontrado' })
-            }
-            const exercises = await Exercise.getExercisesByWorkout(id)
-            if (!exercises) {
-                return res.status(404).json({ success: false, message: 'Exercícios não encontrados' })
-            }
-            const exerciseIds = exercises.map(exercise => exercise.id)
-            const loads = await Load.getLoadsByExerciseId(exerciseIds)
-            if (!loads) {
-                return res.status(404).json({ success: false, message: 'Cargas não encontradas' })
+
+        const rawData = await Workout.getWorkoutDetailsById(id);
+    
+        if (rawData.length === 0) {
+            return res.status(404).json({ success: false, message: 'Treino não encontrado' })
+        }
+
+        let workoutDetails = {
+            id: rawData[0].id,
+            name: rawData[0].name,
+            due: rawData[0].due,
+            imageUrl: rawData[0].image_url,
+            label: rawData[0].label,
+            createdAt: rawData[0].created_at,
+            updatedAt: rawData[0].updated_at,
+            userId: rawData[0].user_id,
+            exercises: {}
+        };
+
+        rawData.forEach(row => {
+            if (row.exercise_id && !workoutDetails.exercises[row.exercise_id]) {
+                workoutDetails.exercises[row.exercise_id] = {
+                    id: row.exercise_id,
+                    name: row.exercise_name,
+                    series: row.exercise_series,
+                    reps: row.exercise_reps,
+                    interval: row.exercise_interval,
+                    link: row.exercise_link,
+                    loads: []
+                };
             }
 
-            res.status(200).json({ success: true, workout, exercises, loads})
-        } catch (error) {
-            res.status(500).json({ success: false, message: 'Erro ao obter o treino', error: error.message })
-        }
+            if (row.load_id) {
+                workoutDetails.exercises[row.exercise_id].loads.push({
+                    id: row.load_id,
+                    weight: row.load_weight,
+                    createdAt: row.load_created_at
+                });
+            }
+        });
+
+        workoutDetails.exercises = Object.values(workoutDetails.exercises);
+    
+        return res.status(200).json({ success: true, workout: workoutDetails })
     },
 
     async updateWorkout(req, res) {
