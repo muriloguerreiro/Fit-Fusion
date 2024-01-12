@@ -1,10 +1,42 @@
 import Link from 'next/link'
 import styles from './page.module.css'
-import WorkoutHandler from './WorkoutHandler'
+import { cookies } from "next/headers";
+import { redirect } from 'next/navigation'
 
 const baseUrl = process.env.API_URL;
 
-export default function Home() {
+export default async function Home() {
+
+  async function getApiDataByLoggedUser(token) {
+    "use server"
+
+    const res = await fetch(`${baseUrl}/workouts/user`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+
+    if (res.status == "403") {
+      redirect('/login')
+    }
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch WorkoutsByLoggedUser')
+    }
+
+    return res.json()
+  }
+
+  const nextCookies = cookies()
+  const token = nextCookies.get('token')
+
+  if (!token) {
+    throw new Error('Failed to get token')
+  }
+
+  const response = await getApiDataByLoggedUser(token.value)
 
   return (
     <div className={styles.container}>
@@ -14,7 +46,10 @@ export default function Home() {
       <main className={styles.main}>
 
         <div className={styles.card}>
-          <WorkoutHandler />
+          {response.workouts ?
+            <Link className={styles.link} href={`/workouts/${response.workouts[0].id}/details`}>
+              <h1 className={styles.cardTitle}>Treinos</h1>
+            </Link> : 'Usuário não possui treino!'}
         </div>
 
         <div className={styles.card}>

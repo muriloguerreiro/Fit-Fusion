@@ -21,7 +21,7 @@ export default async function Page({ params }) {
     })
 
     if (res.status == "403") {
-      throw new Error(`Old token for - ${baseUrl}/workouts/${id}/details and ${token}`)
+      throw new Error(`Old token for - ${baseUrl}/workouts/${id}/details`)
     }
 
     if (!res.ok) {
