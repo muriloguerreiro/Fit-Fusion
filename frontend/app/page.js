@@ -45,7 +45,7 @@ export default async function Home() {
       </header>
       <main className={styles.main}>
 
-        <div className={styles.card}>
+        <div className={styles.workoutCard}>
           {response.workouts ?
             <Link className={styles.link} href={`/workouts/${response.workouts[0].id}/details`}>
               <h1 className={styles.cardTitle}>Treinos</h1>

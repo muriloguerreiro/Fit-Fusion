@@ -18,14 +18,39 @@
   width: 80%;
 }
 
+.workoutCard,
 .card {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
+  background-color: grey;
   border-radius: 10px;
   width: 48%;
   height: 80%;
+}
+
+.workoutCard {
+  position: relative;
+  background-image: url('/assets/workout.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.workoutCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  border-radius: 10px;
+}
+
+.workoutCard > * {
+  position: relative;
+  z-index: 2;
 }
 
 .link {
@@ -33,7 +58,7 @@
 }
 
 .cardTitle {
-  color: #7052bb;
+  color: white;
 }
 
 .navigateForm button {
@@ -41,7 +66,7 @@
   width: 100%;
   border: none;
   border-radius: 10px;
-  background-color: white;  
+  background-color: white;
   margin-block-start: 0.67em;
   margin-block-end: 0.67em;
   outline: none;
