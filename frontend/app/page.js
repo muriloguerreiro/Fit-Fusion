@@ -33,7 +33,7 @@ export default async function Home() {
   const token = nextCookies.get('token')
 
   if (!token) {
-    throw new Error('Failed to get token')
+    redirect('/login')
   }
 
   const response = await getApiDataByLoggedUser(token.value)
